@@ -20,11 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(
-	value = "/parrot", 
-  method = RequestMethod.POST, 
-  produces = "application/xml"
-)
 public class XsltTransformer extends HttpServlet {
 
 	/**
@@ -34,6 +29,12 @@ public class XsltTransformer extends HttpServlet {
 	String xsl = "";
 	
 	private static final long serialVersionUID = 1L;
+
+	@RequestMapping(
+		value = "/transformer", 
+		method = RequestMethod.POST, 
+		produces = "application/xml"
+	)
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
