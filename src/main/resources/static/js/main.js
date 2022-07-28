@@ -589,12 +589,14 @@ window.onload = function(){
 	});
 	
 	btnInputReqResXml.addEventListener("click", function(){
+		inputXML.classList.remove("depressed");
 		divInputReqResXml.style.display = "none";
 		if((reqTrimmed = reqTa.value.replace(/^\s+/,""))!=""&&(resTrimmed = resTa.value.replace(/^\s+/,""))!="")
 			submitListener(reqTrimmed,resTrimmed);
 	});
 				
 	btnInputDatasetXml.addEventListener("click", function(){
+		inputDataset.classList.remove("depressed");
 		divInputDatasetXml.style.display = "none";
 	});
 
