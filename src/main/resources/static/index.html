@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>xsltBuilder</title>
+<script type="text/javascript">
+var parser = new DOMParser();
+var proc = new XSLTProcessor();
+var serializer = new XMLSerializer();
+</script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/xslts.js"></script>
+<script type="text/javascript" src="js/reqResSample.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<h1 style="float:left;">xsltBuilder</h1>
+<div id="puffer"></div>
+<div id="btn_bar">
+<div class="btn" id="inputReq_Res" title="Open Textareas for dropping XML messages">リクエスト・レスポンス入力</div>
+<label for="allNodes" title="By default, same-name subsequent siblings get filtered out">
+   <input type="checkbox" id="allNodes">
+   Show all nodes
+</label> 
+<div class="btn" id="inputDataset" title="Open Textarea for dropping dataset xml">データセット入力</div>
+<div class="btn" id="uuid" title="Add UUID" draggable="true">UUID</div>
+<div class="btn" id="number" title="Add numbering" draggable="true">#</div>
+<div class="btn" id="java_val_to_node" title="Create node based on val" draggable="true">Java</div>
+<div class="btn" id="editXslt" title="Edit the xslt directly">Edit</div>
+<!--<div class="btn" id="param" title="Runtime Parameters" draggable="true">Param</div>-->
+</div>
+<br style="clear:both;"/>
+<form>
+<select id="selOp">
+<option></option>
+</select>
+<div class="div" id="reqContainer">
+<div id="reqHolder"></div>
+<div id="identifier"></div>
+<div id="datasetHolder"></div>
+</div>
+<div class="div" id="resContainer">
+   <div id="resHolder"></div>
+</div>
+<div class="div" id="output"><textarea id="out"></textarea></div>
+</form>
+<div id="inputReqResXml">
+   <textarea id="reqTa"></textarea>
+   <textarea id="resTa"></textarea>
+   <br>
+   <button class="btn" id="btnInputReqResXml">確定</button>
+</div>
+<div id="inputDatasetXml">
+   <textarea id="datasetTa"></textarea>
+   <button class="btn" id="btnInputDatasetXml">確定</button>
+</div>
+</body>
+</html>
