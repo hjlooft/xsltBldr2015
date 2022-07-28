@@ -46,7 +46,7 @@ h1 {margin:2px;}
   border: 2px dashed #000;
 }
 #output{width:40%;}
-#out {height:600px;}
+#out {height:600px;width: 100%;}
 
 .done {
 background-color:green;

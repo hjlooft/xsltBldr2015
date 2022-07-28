@@ -1,3 +1,5 @@
+var resultXslt;
+
 window.onload = function(){
 	
 	var ns = {
@@ -15,7 +17,6 @@ window.onload = function(){
 	var  req_div_d;
 	var  res_div_d;
 	var dsxml_id_d;
-	var resultXslt;
 
 	var sel = document.getElementById("selOp");
 	var req = document.getElementById("reqHolder");
@@ -103,7 +104,7 @@ window.onload = function(){
 		inRes = parser.parseFromString(resStr,"text/xml");
 		
 		var request = new XMLHttpRequest();
-		request.open('POST', 'parrot', true);
+		request.open('POST', 'transformer', true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 		request.send('type=request&contents='+encodeURIComponent(reqStr));
 		
@@ -478,7 +479,7 @@ window.onload = function(){
 			);
 			resultView = true;
 		}
-		request.open('POST', 'parrot', true);
+		request.open('POST', 'transformer', true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 		request.send('type=stylesheet&contents='+ encodeURIComponent(serializer.serializeToString(Xslt2bEvaluated)));
 	}
@@ -567,35 +568,34 @@ window.onload = function(){
 		
 	[].forEach.call([java_vtn,inputXML,inputDataset], function(el){
 		el.addEventListener("click",function(){
-			if(this.className.indexOf("depressed")==-1){
+
 				this.classList.add("depressed");
 				if(el===inputXML){
 					divInputReqResXml.style.display = "block";
 				} else if(el===inputDataset){
 					divInputDatasetXml.style.display = "block";
-				}
-			}else{
-				this.classList.remove("depressed");
-				if(el===inputXML){
-					reqTa.style.display = "none";
-					resTa.style.display = "none";
-					if((reqTrimmed = reqTa.value.replace(/^\s+/,""))!=""&&(resTrimmed = resTa.value.replace(/^\s+/,""))!="")
-						submitListener(reqTrimmed,resTrimmed);
 				} else if(el===inputDataset){
 					datasetTa.style.display = "none";
 					if((trimmed = datasetTa.value.replace(/^\s+/,""))!="")
 						setDataset(trimmed);
 				}
-			}
-		});
-	});
-
-	btnInputReqResXml.addEventListener("click", function(){
-		
+			// }else{
+			// 	this.classList.remove("depressed");
+			// 	if(el===inputXML){
+					// reqTa.style.display = "none";
+					// resTa.style.display = "none";
+					// }
+				});
 	});
 	
+	btnInputReqResXml.addEventListener("click", function(){
+		divInputReqResXml.style.display = "none";
+		if((reqTrimmed = reqTa.value.replace(/^\s+/,""))!=""&&(resTrimmed = resTa.value.replace(/^\s+/,""))!="")
+			submitListener(reqTrimmed,resTrimmed);
+	});
+				
 	btnInputDatasetXml.addEventListener("click", function(){
-
+		divInputDatasetXml.style.display = "none";
 	});
 
 		
