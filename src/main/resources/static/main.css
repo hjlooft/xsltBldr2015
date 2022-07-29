@@ -128,9 +128,14 @@ body {
 	padding: 3% 0%;
 }			
 #inputReqResXml textarea {
-	width: 45%;
+	width: 90%;
 	height: 90%;
 }
 
 /*#reqTa,#resTa,#datasetTa {display:none;}*/
 #reqHolder,#resHolder,#datasetHolder {max-height:600px;overflow-y:scroll;width:97%;}
+
+.half_width {
+	width: 40%;
+	float: left;
+}

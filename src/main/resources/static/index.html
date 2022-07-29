@@ -18,11 +18,7 @@ var serializer = new XMLSerializer();
 <h1 style="float:left;">xsltBuilder</h1>
 <div id="puffer"></div>
 <div id="btn_bar">
-<div class="btn" id="inputReq_Res" title="Open Textareas for dropping XML messages">リクエスト・レスポンス入力</div>
-<label for="allNodes" title="By default, same-name subsequent siblings get filtered out">
-   <input type="checkbox" id="allNodes">
-   Show all nodes
-</label> 
+<div class="btn" id="inputReq_Res" title="Open Textareas for dropping XML messages">リクエスト・レスポンス入力</div> 
 <div class="btn" id="inputDataset" title="Open Textarea for dropping dataset xml">データセット入力</div>
 <div class="btn" id="uuid" title="Add UUID" draggable="true">UUID</div>
 <div class="btn" id="number" title="Add numbering" draggable="true">#</div>
@@ -46,8 +42,20 @@ var serializer = new XMLSerializer();
 <div class="div" id="output"><textarea id="out"></textarea></div>
 </form>
 <div id="inputReqResXml">
-   <textarea id="reqTa"></textarea>
-   <textarea id="resTa"></textarea>
+   <div class="half_width">
+      <p style="display: inline;">リクエスト</p>
+      <label for="allNodes" title="By default, same-name subsequent siblings get filtered out">
+         <input type="checkbox" id="allNodes">
+         Show all nodes
+      </label>
+      <br>
+      <textarea id="reqTa"></textarea>
+   </div>
+   <div class="half_width">
+      <p style="display: inline;">レスポンス</p>
+      <br>
+      <textarea id="resTa"></textarea>
+   </div>
    <br>
    <button class="btn" id="btnInputReqResXml">確定</button>
 </div>
