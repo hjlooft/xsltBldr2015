@@ -229,7 +229,7 @@ window.onload = function(){
 			 
 				var templ = xsltTagFactory(
 											{name:"template",
-											atrs:[["match",qName(origin)]]}
+											atrs:[["match",xmlUtils.qName(origin)]]}
 										);
 			
 				if(origin.parentNode.nodeType==9&&r){
@@ -241,9 +241,9 @@ window.onload = function(){
 				var correspondingResultNode = resultXslt.getElementById(targetId);
 				
 				if(origin.parentNode.nodeType!=9||!r){
-					var parTemplMatch = findTemplateParent(correspondingResultNode.parentNode,"");
+					var parTemplMatch = xmlUtils.findTemplateParent(correspondingResultNode.parentNode,"");
 					
-				var templ2bApplied = getTempl2bApplied(origin,parTemplMatch,(r!=null),explodedSrcId[1]?explodedSrcId[1]:null);
+				var templ2bApplied = xmlUtils.getTempl2bApplied(origin,parTemplMatch,(r!=null),explodedSrcId[1]?explodedSrcId[1]:null);
 				
 					
 					java_vtn_mode = java_vtn.className.indexOf("depressed")!=-1;
@@ -309,11 +309,11 @@ window.onload = function(){
 						if(match&&t_c.childNodes[0]&&(t_c.childNodes[0].nodeType==3||t_c.childNodes[0].nodeName=="xsl:value-of")){
 							while(t_c.hasChildNodes())
 								t_c.childNodes[0].remove();
-							appendXsltChild(t_c,{name:"value-of",atrs:[["select",(x+"/"+qName(t_c)).replace(/^\//,"")]]});
+							appendXsltChild(t_c,{name:"value-of",atrs:[["select",(x+"/"+xmlUtils.qName(t_c)).replace(/^\//,"")]]});
 							markAsDone(t_c.id,match.id);
 						}
 						if(match&&match.childNodes[0]&&match.childNodes[0].nodeType==1&&t_c.childNodes[0]&&t_c.childNodes[0].nodeType==1){
-							addXPaths(match,t_c,x+"/"+qName(t_c));
+							addXPaths(match,t_c,x+"/"+xmlUtils.qName(t_c));
 							//markAsDone(t_c.id,match.id);
 						}
 					})
@@ -383,21 +383,21 @@ window.onload = function(){
 	function processLookup(lookedupValDS,t){
 		var lookupValDSParts = lookupValDS.split("@");
 		var lookedupValDSParts = lookedupValDS.split("@");
-		var commonAnc = getCommonAnc(dsxml_id_d.getElementById(lookupValDSParts[0]),dsxml_id_d.getElementById(lookedupValDSParts[0]));
+		var commonAnchestor = xmlUtils.getCommonAnc(dsxml_id_d.getElementById(lookupValDSParts[0]),dsxml_id_d.getElementById(lookedupValDSParts[0]));
 		if(part=lookupValDSParts[1])
-			commonAnc[1].push("@"+part);
+			commonAnchestor[1].push("@"+part);
 		if(part=lookedupValDSParts[1])
-			commonAnc[2].push("@"+part);
-		var a = commonAnc[1].join("/");
-		var b = commonAnc[2].join("/");
+			commonAnchestor[2].push("@"+part);
+		var a = commonAnchestor[1].join("/");
+		var b = commonAnchestor[2].join("/");
 	
-		var templ2bApplied = getTempl2bApplied(req_id_d.getElementById(lookupValReq),
-		findTemplateParent(resultXslt.getElementById(t)),true,null);
-		//console.log(getTempl2bApplied(commonAnc[0],"foo",false,null)+"["+a+"=current()/"+templ2bApplied+"]/"+b);
+		var templ2bApplied = xmlUtils.getTempl2bApplied(req_id_d.getElementById(lookupValReq),
+		xmlUtils.findTemplateParent(resultXslt.getElementById(t)),true,null);
+		//console.log(xmlUtils.getTempl2bApplied(commonAnchestor[0],"foo",false,null)+"["+a+"=current()/"+templ2bApplied+"]/"+b);
 		var target = resultXslt.getElementById(t);
 		while(target.hasChildNodes())
 			target.childNodes[0].remove();
-		target.appendChild(xsltTagFactory({name:"value-of",atrs:[["fakeDocFn","true"],["select",getTempl2bApplied(commonAnc[0],"foo",false,null)+"["+a+"=current()/"+templ2bApplied+"]/"+b]]}));
+		target.appendChild(xsltTagFactory({name:"value-of",atrs:[["fakeDocFn","true"],["select",xmlUtils.getTempl2bApplied(commonAnchestor[0],"foo",false,null)+"["+a+"=current()/"+templ2bApplied+"]/"+b]]}));
 		lookupMode = false;
 		markAsDone(t);
 		displayResult();
@@ -505,10 +505,10 @@ window.onload = function(){
 		resultXslt.documentElement.childNodes[0]);
 		if(!resultXslt.getElementById("identNode")){
 			resultXslt.documentElement.insertBefore(
-			xsltTagFactory({name:"variable",atrs:[["name","identNode"],["id","identNode"],["select",getXPathForElement(el,req_id_d)]]}),
+			xsltTagFactory({name:"variable",atrs:[["name","identNode"],["id","identNode"],["select",xmlUtils.getXPathForElement(el,req_id_d)]]}),
 			resultXslt.documentElement.childNodes[0]);
 		} else {
-			resultXslt.getElementById("identNode").setAttribute("select",getXPathForElement(el,req_id_d));
+			resultXslt.getElementById("identNode").setAttribute("select",xmlUtils.getXPathForElement(el,req_id_d));
 		}
 			
 		evalFilenameFormula();
