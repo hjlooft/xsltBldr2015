@@ -46,10 +46,10 @@ window.onload = function(){
 		
 	function setDataset(set){
 		var inSet  = (typeof set == "object")?set.target.value:set;
-		ds_xml = parser.parseFromString(inSet,"text/xml");
-		dsxml_id_d = proc_addid.transformToDocument(ds_xml);
-		proc_divify.setParameter(null,"class","dsBox divBox");
-		ds.innerHTML = serializer.serializeToString(proc_divify.transformToDocument(dsxml_id_d));
+		ds_xml = xsltBldrApp.parser.parseFromString(inSet,"text/xml");
+		dsxml_id_d = xsltBldrApp.transformers.addIdsToNodesTransf.transformToDocument(ds_xml);
+		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"class","dsBox divBox");
+		ds.innerHTML = xsltBldrApp.serializer.serializeToString(xsltBldrApp.transformers.xmlToDraggableHtmlTransf.transformToDocument(dsxml_id_d));
 		
 		var cols = document.querySelectorAll('.dsBox, .atr');
 		[].forEach.call(cols, function(col) {
@@ -71,7 +71,7 @@ window.onload = function(){
 	[].forEach.call(cols, function(col) {
 		  col.addEventListener('dragstart', handleDragStart, false);
 		  col.addEventListener('dragend', handleDragEnd, false);
-	}
+		}
 	);
 		
 	ident.addEventListener("dragover",handleDragOver);
@@ -82,7 +82,7 @@ window.onload = function(){
 	//setDataset(anxml_str);
 
 	outPanel = document.getElementById("out");
-	outPanel.textContent = serializer.serializeToString(resultXslt);
+	outPanel.textContent = xsltBldrApp.serializer.serializeToString(resultXslt);
 	outPanel.addEventListener("dblclick",displayTransResult);
 
 	
@@ -91,17 +91,17 @@ window.onload = function(){
 		if(curOpStr=='')
 			return;
 		
-		reqTa.value = reqResSamples[curOpStr]['req'];
-		resTa.value = reqResSamples[curOpStr]['res'];
+		reqTa.value = xsltBldrApp.reqResSamples[curOpStr]['req'];
+		resTa.value = xsltBldrApp.reqResSamples[curOpStr]['res'];
 		
-		submitListener(reqResSamples[curOpStr]['req'],reqResSamples[curOpStr]['res']);
+		submitListener(xsltBldrApp.reqResSamples[curOpStr]['req'],xsltBldrApp.reqResSamples[curOpStr]['res']);
 	}
 	
 	function submitListener(reqStr,resStr){
 		ident.textContent = "";
 		documentEls2bReplaced = []; //fake document() related
-		inReq = parser.parseFromString(reqStr,"text/xml");
-		inRes = parser.parseFromString(resStr,"text/xml");
+		inReq = xsltBldrApp.parser.parseFromString(reqStr,"text/xml");
+		inRes = xsltBldrApp.parser.parseFromString(resStr,"text/xml");
 		
 		var request = new XMLHttpRequest();
 		request.open('POST', 'transformer', true);
@@ -110,17 +110,17 @@ window.onload = function(){
 		
 		req.innerHTML = inReq.documentElement.nodeName;
 		res.innerHTML = inRes.documentElement.nodeName;
-		proc_addid.setParameter(null,"filterOnOff",(document.getElementById("allNodes").checked)?"off":"on");
-		req_id_d = proc_addid.transformToDocument(inReq);
-		proc_divify.setParameter(null,"class","reqBox divBox");
-		req_div_d = proc_divify.transformToDocument(req_id_d);
-		var reqSerialized = serializer.serializeToString(req_div_d);
+		xsltBldrApp.transformers.addIdsToNodesTransf.setParameter(null,"filterOnOff",(document.getElementById("allNodes").checked)?"off":"on");
+		req_id_d = xsltBldrApp.transformers.addIdsToNodesTransf.transformToDocument(inReq);
+		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"class","reqBox divBox");
+		req_div_d = xsltBldrApp.transformers.xmlToDraggableHtmlTransf.transformToDocument(req_id_d);
+		var reqSerialized = xsltBldrApp.serializer.serializeToString(req_div_d);
 		
 		document.getElementById("reqHolder").innerHTML = reqSerialized;
-		proc_divify.setParameter(null,"class","tagBox divBox");
-		res_id_d = proc_addid.transformToDocument(inRes);
-		res_div_d = proc_divify.transformToDocument(res_id_d);
-		document.getElementById("resHolder").innerHTML = serializer.serializeToString(res_div_d);
+		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"class","tagBox divBox");
+		res_id_d = xsltBldrApp.transformers.addIdsToNodesTransf.transformToDocument(inRes);
+		res_div_d = xsltBldrApp.transformers.xmlToDraggableHtmlTransf.transformToDocument(res_id_d);
+		document.getElementById("resHolder").innerHTML = xsltBldrApp.serializer.serializeToString(res_div_d);
 
 		var cols = document.querySelectorAll('.reqBox');
 		[].forEach.call(cols, function(col) {
@@ -169,15 +169,15 @@ window.onload = function(){
 	}
 	
 	function displayResult(){
-		proc_prettify.setParameter(null,"noFilter","false");
-		var prettyPretty = proc_templ_divider.transformToDocument(proc_prettify.transformToDocument(resultXslt));
+		xsltBldrApp.transformers.indentTransf.setParameter(null,"noFilter","false");
+		var prettyPretty = xsltBldrApp.transformers.templDividerTransf.transformToDocument(xsltBldrApp.transformers.indentTransf.transformToDocument(resultXslt));
 		
 		[].forEach.call(resultXslt.documentElement.attributes,function(atr){
 			prettyPretty.documentElement.setAttributeNS(atr.namespaceURI,atr.nodeName,atr.value);
 		});
 			
 		document.getElementById("out").value =
-		serializer.serializeToString(prettyPretty);
+		xsltBldrApp.serializer.serializeToString(prettyPretty);
 		resultView = false;
 	}
 	
@@ -457,7 +457,7 @@ window.onload = function(){
 			});
 		}
 
-		//Xslt2bEvaluated = proc_prettify.transformToDocument(Xslt2bEvaluated);		
+		//Xslt2bEvaluated = xsltBldrApp.transformers.indentTransf.transformToDocument(Xslt2bEvaluated);		
 		var proc_trans_preview = new XSLTProcessor();
 		
 		addDeclToStylesheet(Xslt2bEvaluated);
@@ -470,18 +470,18 @@ window.onload = function(){
 		request.onload = function(){
 			console.log("got something back!");
 			
-			proc_prettify.setParameter(null,"noFilter","false");
+			xsltBldrApp.transformers.indentTransf.setParameter(null,"noFilter","false");
 			
-			outPanel.value = serializer.serializeToString(
-				proc_prettify.transformToDocument(
-					parser.parseFromString(this.responseText,'text/xml')
+			outPanel.value = xsltBldrApp.serializer.serializeToString(
+				xsltBldrApp.transformers.indentTransf.transformToDocument(
+					xsltBldrApp.parser.parseFromString(this.responseText,'text/xml')
 				)
 			);
 			resultView = true;
 		}
 		request.open('POST', 'transformer', true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-		request.send('type=stylesheet&contents='+ encodeURIComponent(serializer.serializeToString(Xslt2bEvaluated)));
+		request.send('type=stylesheet&contents='+ encodeURIComponent(xsltBldrApp.serializer.serializeToString(Xslt2bEvaluated)));
 	}
 	
 	function handleIdentDiv(e){
@@ -641,7 +641,7 @@ window.onload = function(){
 		displayResult();
 	});*/
 
-	for (str in reqResSamples){
+	for (str in xsltBldrApp.reqResSamples){
 		var opt = document.createElement("option");
 		opt.appendChild(document.createTextNode(str));
 		sel.appendChild(opt);	
@@ -652,13 +652,13 @@ window.onload = function(){
 	document.getElementById("editXslt").addEventListener("click",function(){
 		if(this.className.indexOf("depressed")==-1){
 			this.classList.add("depressed");
-			proc_prettify.setParameter(null,"noFilter","true");
-			var pretty = proc_prettify.transformToDocument(resultXslt);
+			xsltBldrApp.transformers.indentTransf.setParameter(null,"noFilter","true");
+			var pretty = xsltBldrApp.transformers.indentTransf.transformToDocument(resultXslt);
 			addDeclToStylesheet(pretty);
-			outPanel.value = serializer.serializeToString(pretty);		
+			outPanel.value = xsltBldrApp.serializer.serializeToString(pretty);		
 		} else{
 			//displayResult();
-			var newResultXslt = parser.parseFromString(outPanel.value,"text/xml");
+			var newResultXslt = xsltBldrApp.parser.parseFromString(outPanel.value,"text/xml");
 			if(!newResultXslt){
 				alert("You are edited xslt does not seem to be well-formed xml.");
 				return;
@@ -667,9 +667,9 @@ window.onload = function(){
 			this.classList.remove("depressed");
 			resultView = false;
 			displayTransResult();
-			/*proc_prettify.setParameter(null,"noFilter","false");
+			/*xsltBldrApp.transformers.indentTransf.setParameter(null,"noFilter","false");
 			document.getElementById("out").value =
-			serializer.serializeToString(proc_templ_divider.transformToDocument(proc_prettify.transformToDocument(resultXslt)));
+			xsltBldrApp.serializer.serializeToString(xsltBldrApp.transformers.templDividerTransf.transformToDocument(xsltBldrApp.transformers.indentTransf.transformToDocument(resultXslt)));
 			resultView = false;*/
 		}
 	});
