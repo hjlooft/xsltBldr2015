@@ -144,7 +144,6 @@ window.onload = function(){
 
 			//create result XSLT document and documentElement
 		resultXslt = document.implementation.createDocument(ns["xslt"],"xsl:stylesheet");
-		
 		addDeclToStylesheet(resultXslt);
 		
 		xsltBldrApp.contrastingColors = xsltBldrApp.usedColors.concat(xsltBldrApp.contrastingColors);
@@ -183,7 +182,7 @@ window.onload = function(){
 	}
 	
 	function markAsDone(tar,src){
-	
+
 		const colorForThisPair = xsltBldrApp.contrastingColors.shift();
 		xsltBldrApp.usedColors.push(colorForThisPair);
 

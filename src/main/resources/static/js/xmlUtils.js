@@ -69,7 +69,7 @@ const xmlUtils = {
 		if (p.nodeName == "xsl:template") {
 			return p.getAttribute("match");
 		} else {
-			return findTemplateParent(p.parentNode);
+			return this.findTemplateParent(p.parentNode);
 		}
 	},
 	getTempl2bApplied: function (o, t, r, at) {
@@ -77,9 +77,9 @@ const xmlUtils = {
 			var pathEls = [];
 			(function getPath(p) {
 				if (p.nodeType != 9) {
-					if (qName(p) != t) {
+					if (xmlUtils.qName(p) != t) {
 
-						pathEls.unshift(qName(p));
+						pathEls.unshift(xmlUtils.qName(p));
 						getPath(p.parentNode);
 
 					} else {
