@@ -184,11 +184,14 @@ window.onload = function(){
 	
 	function markAsDone(tar,src){
 	
-		document.getElementById("resHolder").querySelector('div[id='+tar+']').classList.add("done");
+		const colorForThisPair = xsltBldrApp.contrastingColors.shift();
+		xsltBldrApp.usedColors.push(colorForThisPair);
+
+		document.getElementById("resHolder").querySelector('div[id='+tar+']').style.backgroundColor = colorForThisPair;
 	if(src){
 		try
 		{
-			document.getElementById("reqHolder").querySelector('div[id='+src+']').classList.add("done");
+			document.getElementById("reqHolder").querySelector('div[id='+src+']').style.backgroundColor = colorForThisPair;
 		} catch(e){};
 	}
 	}
