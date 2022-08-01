@@ -147,6 +147,7 @@ window.onload = function(){
 		
 		addDeclToStylesheet(resultXslt);
 		
+		xsltBldrApp.contrastingColors = xsltBldrApp.usedColors.concat(xsltBldrApp.contrastingColors);
 		processDrag(req_id_d.documentElement.id,res_id_d.documentElement.id);
 		displayResult();
 	}
