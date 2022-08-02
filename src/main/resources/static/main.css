@@ -139,3 +139,25 @@ body {
 	width: 40%;
 	float: left;
 }
+
+.tagstyleGreen { background-color: #3cb44b; color: white;}
+.tagstyleYellow { background-color: #ffe119; color: black;}
+.tagstyleBlue { background-color: #4363d8; color: white;}
+.tagstyleOrange { background-color: #f58231; color: white;}
+.tagstylePurple { background-color: #911eb4; color: white;}
+.tagstyleCyan { background-color: #42d4f4; color: black;}
+.tagstyleMagenta { background-color: #f032e6; color: white;}
+.tagstyleLime { background-color: #bfef45; color: black;}
+.tagstylePink { background-color: #fabed4; color: black;}
+.tagstyleTeal { background-color: #469990; color: white;}
+.tagstyleLavender { background-color: #dcbeff; color: black;}
+.tagstyleBrown { background-color: #9A6324; color: white;}
+.tagstyleBeige { background-color: #fffac8; color: black;}
+.tagstyleMaroon { background-color: #800000; color: white;}
+.tagstyleMint { background-color: #aaffc3; color: black;}
+.tagstyleOlive { background-color: #808000; color: white;}
+.tagstyleApricot { background-color: #ffd8b1; color: black;}
+.tagstyleNavy { background-color: #000075; color: white;}
+.tagstyleGrey { background-color: #a9a9a9; color: white;}
+.tagstyleRed { background-color: #e6194B; color: white;}
+.tagstyleBlack { background-color: #000; color: white;}

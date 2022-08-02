@@ -183,14 +183,17 @@ window.onload = function(){
 	
 	function markAsDone(tar,src){
 
+		if (xsltBldrApp.contrastingColors.length == 0){
+			xsltBldrApp.contrastingColors = xsltBldrApp.usedColors.concat(xsltBldrApp.contrastingColors);
+		}
 		const colorForThisPair = xsltBldrApp.contrastingColors.shift();
 		xsltBldrApp.usedColors.push(colorForThisPair);
 
-		document.getElementById("resHolder").querySelector('div[id='+tar+']').style.backgroundColor = colorForThisPair;
+		document.getElementById("resHolder").querySelector('div[id='+tar+']').classList.add("tagstyle" + colorForThisPair);
 	if(src){
 		try
 		{
-			document.getElementById("reqHolder").querySelector('div[id='+src+']').style.backgroundColor = colorForThisPair;
+			document.getElementById("reqHolder").querySelector('div[id='+src+']').classList.add("tagstyle" + colorForThisPair);
 		} catch(e){};
 	}
 	}
