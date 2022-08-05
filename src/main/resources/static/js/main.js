@@ -48,7 +48,7 @@ window.onload = function(){
 		var inSet  = (typeof set == "object")?set.target.value:set;
 		ds_xml = xsltBldrApp.parser.parseFromString(inSet,"text/xml");
 		dsxml_id_d = xsltBldrApp.transformers.addIdsToNodesTransf.transformToDocument(ds_xml);
-		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"class","dsBox divBox");
+		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"doc-role","business-object");
 		ds.innerHTML = xsltBldrApp.serializer.serializeToString(xsltBldrApp.transformers.xmlToDraggableHtmlTransf.transformToDocument(dsxml_id_d));
 		
 		var cols = document.querySelectorAll('.dsBox, .atr');
@@ -59,7 +59,6 @@ window.onload = function(){
 			  col.addEventListener('dragleave', handleDragLeave, false);
 			  col.addEventListener('drop', handleDropOnDS, false);
 			  col.addEventListener('dragend', handleDragEnd, false);
-			  col.addEventListener('dblclick', tglCollapse, false);
 			}
 		);
 		//add ns decl for external dataset xml
@@ -103,21 +102,21 @@ window.onload = function(){
 		inReq = xsltBldrApp.parser.parseFromString(reqStr,"text/xml");
 		inRes = xsltBldrApp.parser.parseFromString(resStr,"text/xml");
 		
-		var request = new XMLHttpRequest();
-		request.open('POST', 'transformer', true);
-		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-		request.send('type=request&contents='+encodeURIComponent(reqStr));
+		// var request = new XMLHttpRequest();
+		// request.open('POST', 'transformer', true);
+		// request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		// request.send('type=request&contents='+encodeURIComponent(reqStr));
 		
 		req.innerHTML = inReq.documentElement.nodeName;
 		res.innerHTML = inRes.documentElement.nodeName;
 		xsltBldrApp.transformers.addIdsToNodesTransf.setParameter(null,"filterOnOff",(document.getElementById("allNodes").checked)?"off":"on");
 		req_id_d = xsltBldrApp.transformers.addIdsToNodesTransf.transformToDocument(inReq);
-		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"class","reqBox divBox");
+		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"doc-role","req");
 		req_div_d = xsltBldrApp.transformers.xmlToDraggableHtmlTransf.transformToDocument(req_id_d);
 		var reqSerialized = xsltBldrApp.serializer.serializeToString(req_div_d);
-		
 		document.getElementById("reqHolder").innerHTML = reqSerialized;
-		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"class","tagBox divBox");
+		
+		xsltBldrApp.transformers.xmlToDraggableHtmlTransf.setParameter(null,"doc-role","res");
 		res_id_d = xsltBldrApp.transformers.addIdsToNodesTransf.transformToDocument(inRes);
 		res_div_d = xsltBldrApp.transformers.xmlToDraggableHtmlTransf.transformToDocument(res_id_d);
 		document.getElementById("resHolder").innerHTML = xsltBldrApp.serializer.serializeToString(res_div_d);
@@ -126,7 +125,6 @@ window.onload = function(){
 		[].forEach.call(cols, function(col) {
 			  col.addEventListener('dragstart', handleDragStart, false);
 			  col.addEventListener('dragend', handleDragEnd, false);
-			  col.addEventListener('dblclick', tglCollapse, false);
 			}
 		);
 		
@@ -138,7 +136,6 @@ window.onload = function(){
 			  col.addEventListener('dragleave', handleDragLeave, false);
 			  col.addEventListener('drop', handleDrop, false);
 			  col.addEventListener('dragend', handleDragEnd, false);
-			  col.addEventListener('dblclick', tglCollapse, false);
 			}
 		);
 
