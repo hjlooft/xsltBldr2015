@@ -1,10 +1,12 @@
 package com.hjlooft.xsltBldr2015.services;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import javax.xml.transform.*;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.URIResolver;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -21,14 +23,12 @@ public class TransformerFactoryService {
             this.basedir = basedir+"/";
         
         this.factory = TransformerFactory.newInstance();
-        //this.factory.setURIResolver(new SystemResourceURIResolver(this.basedir));
+
         this.factory.setURIResolver(new SystemResourceURIResolver(this.basedir, docBusinessobject));
     }
 
     public Transformer newTransformer(Document stylesheetDoc)
             throws TransformerConfigurationException{
-        //         System.out.println(ClassLoader.getSystemResource(this.basedir+stylesheet));
-        // InputStream is = ClassLoader.getSystemResourceAsStream(this.basedir+stylesheet);
         return this.factory.newTransformer(new DOMSource(stylesheetDoc));
     }
     
