@@ -20,6 +20,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,7 @@ public class TransformController {
    * @param posted_transform_data
    * @param response
    */
+  @CrossOrigin
   @RequestMapping(value = "/transform", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.ALL_VALUE)
   public void handleTransformRequest(@RequestBody String posted_transform_data, HttpServletResponse response) {
 
