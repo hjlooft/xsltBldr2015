@@ -59,6 +59,7 @@ window.onload = function(){
 			  col.addEventListener('dragleave', handleDragLeave, false);
 			  col.addEventListener('drop', handleDropOnDS, false);
 			  col.addEventListener('dragend', handleDragEnd, false);
+			  col.addEventListener('dblclick', tglCollapse, false);
 			}
 		);
 		//add ns decl for external dataset xml
@@ -102,11 +103,6 @@ window.onload = function(){
 		inReq = xsltBldrApp.parser.parseFromString(reqStr,"text/xml");
 		inRes = xsltBldrApp.parser.parseFromString(resStr,"text/xml");
 		
-		// var request = new XMLHttpRequest();
-		// request.open('POST', 'transformer', true);
-		// request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-		// request.send('type=request&contents='+encodeURIComponent(reqStr));
-		
 		req.innerHTML = inReq.documentElement.nodeName;
 		res.innerHTML = inRes.documentElement.nodeName;
 		xsltBldrApp.transformers.addIdsToNodesTransf.setParameter(null,"filterOnOff",(document.getElementById("allNodes").checked)?"off":"on");
@@ -125,6 +121,7 @@ window.onload = function(){
 		[].forEach.call(cols, function(col) {
 			  col.addEventListener('dragstart', handleDragStart, false);
 			  col.addEventListener('dragend', handleDragEnd, false);
+			  col.addEventListener('dblclick', tglCollapse, false);
 			}
 		);
 		
@@ -136,11 +133,13 @@ window.onload = function(){
 			  col.addEventListener('dragleave', handleDragLeave, false);
 			  col.addEventListener('drop', handleDrop, false);
 			  col.addEventListener('dragend', handleDragEnd, false);
+			  col.addEventListener('dblclick', tglCollapse, false);
 			}
 		);
 
 			//create result XSLT document and documentElement
 		resultXslt = document.implementation.createDocument(ns["xslt"],"xsl:stylesheet");
+		
 		addDeclToStylesheet(resultXslt);
 		
 		xsltBldrApp.contrastingColors = xsltBldrApp.usedColors.concat(xsltBldrApp.contrastingColors);
@@ -179,7 +178,7 @@ window.onload = function(){
 	}
 	
 	function markAsDone(tar,src){
-
+	
 		if (xsltBldrApp.contrastingColors.length == 0){
 			xsltBldrApp.contrastingColors = xsltBldrApp.usedColors.concat(xsltBldrApp.contrastingColors);
 		}
@@ -482,9 +481,9 @@ window.onload = function(){
 			);
 			resultView = true;
 		}
-		request.open('POST', 'transformer', true);
+		request.open('POST', 'http://127.0.0.1:8080/api/transform', true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-		request.send('type=stylesheet&contents='+ encodeURIComponent(xsltBldrApp.serializer.serializeToString(Xslt2bEvaluated)));
+		request.send(postData);
 	}
 	
 	function handleIdentDiv(e){
