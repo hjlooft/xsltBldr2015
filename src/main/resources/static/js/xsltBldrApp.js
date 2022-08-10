@@ -2,6 +2,33 @@ const xsltBldrApp = {};
 xsltBldrApp.parser = new DOMParser();
 xsltBldrApp.serializer = new XMLSerializer();
 
+//from https://sashamaps.net/docs/resources/20-colors/
+// put red at the end. Color defs in css file
+xsltBldrApp.contrastingColors = [
+    "Green",
+    "Yellow",
+    "Blue",
+    "Orange",
+    "Purple",
+    "Cyan",
+    "Magenta",
+    "Lime",
+    "Pink",
+    "Teal",
+    "Lavender",
+    "Brown",
+    "Beige",
+    "Maroon",
+    "Mint",
+    "Olive",
+    "Apricot",
+    "Navy",
+    "Grey",
+    "Red"    
+];
+
+xsltBldrApp.usedColors = [];
+
 xsltBldrApp.reqResSamples =
     {
         "InventionstatusBereitstellen": {
