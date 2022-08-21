@@ -1,16 +1,16 @@
 const xmlUtils = {
-	qName: function (node) {
+	qName: function (node, doc) {
 		var prefix = '';
 		if (node.namespaceURI) {
-			if (!resultXslt.lookupPrefix(node.namespaceURI)) {
-				for (a in (atrs = resultXslt.documentElement.attributes)) {
+			if (!doc.lookupPrefix(node.namespaceURI)) {
+				for (a in (atrs = doc.documentElement.attributes)) {
 					if (atrs[a].localName && atrs[a].localName != "xmlns" && atrs[a].value == node.namespaceURI) {
 						prefix = atrs[a].localName;
 						break;
 					}
 				}
 			} else {
-				prefix = resultXslt.lookupPrefix(node.namespaceURI);
+				prefix = doc.lookupPrefix(node.namespaceURI);
 			}
 			prefix = prefix ? prefix + ":" : '';
 		}
@@ -72,14 +72,13 @@ const xmlUtils = {
 			return this.findTemplateParent(p.parentNode);
 		}
 	},
-	getTempl2bApplied: function (o, t, r, at) {
+	getTempl2bApplied: function (o, t, r, at, doc) {
 		if (o.parentNode.nodeType != 9) {
 			var pathEls = [];
 			(function getPath(p) {
 				if (p.nodeType != 9) {
-					if (xmlUtils.qName(p) != t) {
-
-						pathEls.unshift(xmlUtils.qName(p));
+					if (this.qName(p, doc) != t) {
+						pathEls.unshift(this.qName(p, doc));
 						getPath(p.parentNode);
 
 					} else {

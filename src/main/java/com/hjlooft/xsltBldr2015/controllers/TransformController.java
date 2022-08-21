@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import org.xml.sax.InputSource;
 
 import com.hjlooft.xsltBldr2015.services.TransformerFactoryService;
@@ -111,17 +113,29 @@ public class TransformController {
     * get the BUSINESS OBJECT DATA xml fragment
     * and store it to the businessObjectDataDir
     * ***************************************** */
-    Element elemBusinessObjectData = getFirstChildElement((Element) doc.getElementsByTagName("business_object_data").item(0));
-
     Document docBusinessobject = null;
-    try {
-      docBusinessobject = getDocumentBuilder(true).newDocument();
-      Node elemBusinessdataForImport = docBusinessobject.importNode(elemBusinessObjectData, true);
-      docBusinessobject.appendChild(elemBusinessdataForImport);
-    } catch (ParserConfigurationException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
+
+    NodeList elemBusinessObjectDataWrappers = doc.getElementsByTagName("business_object_data");
+    
+    if(elemBusinessObjectDataWrappers.getLength() > 0){
+    
+    Element elemBusinessObjectDataWrapper =(Element) elemBusinessObjectDataWrappers.item(0);
+
+
+    if(elemBusinessObjectDataWrapper != null){
+      Element elemBusinessObjectData = getFirstChildElement(elemBusinessObjectDataWrapper);
+  
+      try {
+        docBusinessobject = getDocumentBuilder(true).newDocument();
+        Node elemBusinessdataForImport = docBusinessobject.importNode(elemBusinessObjectData, true);
+        docBusinessobject.appendChild(elemBusinessdataForImport);
+      } catch (ParserConfigurationException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     }
+
+  }
 
     // // get business object name for generating name for xml file
     // String businessObjectName = elemBusinessObjectData.getTagName().toLowerCase().replace(":", "_");

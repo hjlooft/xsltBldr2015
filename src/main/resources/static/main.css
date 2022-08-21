@@ -15,7 +15,7 @@ h1 {margin:2px;}
 
 .div {width:30%;float:left;}
 
-.divBox  {
+.xmlNodeDiv  {
   border-style: solid;
   display: inline-block;
   padding: 2px 4px 4px 18px;
@@ -28,7 +28,7 @@ h1 {margin:2px;}
 	box-shadow: 1px 2px 4px rgba(0,0,0,.4);
 	cursor:move;
 }
-.divBox .divBox {
+.xmlNodeDiv .xmlNodeDiv {
   display: table
   }
   
@@ -116,20 +116,20 @@ body {
 }
 
 #inputReqResXml, #inputDatasetXml {
-	display: none;
+	/* display: none; */
 	position: absolute;
-	background-color: rgba(0,0,0,.4);
+	background-color: rgba(0,0,0,.7);
 	top: 0px;
-	height: 100%;
+	height: 100vh;
 	left: 0px;
 	width: 100vw;
 	right:0;
 	text-align: center;
-	padding: 3% 0%;
+	/* padding: 3% 0%; */
 }			
 #inputReqResXml textarea {
-	width: 90%;
-	height: 90%;
+	width: 45vw;
+	height: 80vh;
 }
 
 /*#reqTa,#resTa,#datasetTa {display:none;}*/
@@ -138,6 +138,10 @@ body {
 .half_width {
 	width: 40%;
 	float: left;
+}
+
+.overlayText {
+	font-size: 2em;
 }
 
 .tagstyleGreen { background-color: #3cb44b; color: white;}

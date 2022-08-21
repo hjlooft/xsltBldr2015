@@ -52,15 +52,10 @@ xsltBldrApp.transformers =
 		</xsl:template>
 		<xsl:template match="node()">
 			<xsl:if test="name()">
-				<div class="divBox" draggable="true" ondblclick="tglCollapase" ondragstart="handleDragStart">
+				<div class="xmlNodeDiv" draggable="true">
 					<xsl:if test="not(*)">
 						<xsl:attribute name="title">
 							<xsl:value-of select="."/>
-						</xsl:attribute>
-					</xsl:if>
-					<xsl:if test="$doc-role = 'business-object'">
-						<xsl:attribute name="ondrop">
-						<xsl:value-of select="'handleDropOnDS'"/>
 						</xsl:attribute>
 					</xsl:if>
 					<xsl:copy-of select="@id"/>
@@ -115,7 +110,7 @@ xsltBldrApp.transformers =
 	xsltStrs.templDividerTransf = '<?xml version="1.0"?><xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output method="xml"/><xsl:template match="node()|@*"><xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy></xsl:template><xsl:template match="xsl:template"><xsl:text>&#10;  </xsl:text><xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy>	</xsl:template></xsl:stylesheet>';
 	
 	xsltStrs.indentTransf = '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output method="xml" indent="yes"/><xsl:strip-space elements="*"/><xsl:param name="noFilter"/><xsl:template match="node()|@*"><xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy></xsl:template><xsl:template match="@id|@fakeDocFn|@gl_param"><xsl:if test="$noFilter=\'true\'"><xsl:copy-of select="."/></xsl:if></xsl:template></xsl:stylesheet>';
-	if(navigator.userAgent.indexOf("Firefox")==-1){
+	if(navigator.userAgent.indexOf("Firefox")>=-1){
 		xsltStrs.indentTransf = '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output method="xml" indent="yes"/><xsl:param name="noFilter"/><xsl:param name="indent-increment" select="\'   \'" /><xsl:template match="*"><xsl:param name="indent" select="\'&#xA;\'"/><xsl:value-of select="$indent"/><xsl:copy><xsl:choose><xsl:when test="$noFilter=\'false\'"><xsl:copy-of select="@*[name()!=\'id\' and name()!=\'fakeDocFn\' and name()!=\'gl_param\']" /></xsl:when><xsl:when test="$noFilter=\'true\'"><xsl:copy-of select="@*"/></xsl:when></xsl:choose><xsl:apply-templates><xsl:with-param name="indent" select="concat($indent, $indent-increment)"/></xsl:apply-templates><xsl:if test="*"><xsl:value-of select="$indent"/></xsl:if></xsl:copy></xsl:template><xsl:template match="comment()|processing-instruction()"><xsl:copy /></xsl:template><!-- WARNING: this is dangerous. Handle with care --><xsl:template match="text()[normalize-space(.)=\'\']"/></xsl:stylesheet>';
 	}
 
